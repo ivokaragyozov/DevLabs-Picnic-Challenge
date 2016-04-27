@@ -1,0 +1,29 @@
+﻿<div class="panel-heading">Статистика за предпочитанията на екипа</div>
+<div class="panel-body">
+    <table class="table table-striped table-hover ">
+        <thead>
+            <tr>
+                <th>Какво</th>
+                <th>Какво количество?</th>
+                <th>Цена за единица</th>
+                <th>Общ разход</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#products}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{count}}</td>
+                <td>{{price}}лв</td>
+                <td>{{totalCost}}лв</td>
+            </tr>
+            {{/products}}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-right">Нужен бюджет:</td>
+                <td>{{totalCost}}лв</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

@@ -1,0 +1,13 @@
+﻿<div class="panel-heading">Какво искаш за почерпка (и какво количество)?</div>
+<div class="panel-body">
+    {{#products}}
+    <div class="form-group label-floating" product-id={{_id}}>
+        <label class="control-label">{{name}}</label>
+        <input type="text" class="form-control" name="input" />
+    </div>
+    {{/products}}
+
+</div>
+<div class="panel-footer">
+    <button class="btn btn-info btn-block" data-toggle="modal" data-target="#modal">Изпрати</button>
+</div>

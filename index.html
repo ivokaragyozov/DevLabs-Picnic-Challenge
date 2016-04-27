@@ -1,0 +1,124 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+    <title>DevLabs Piknik Challenge</title>
+
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <!-- Bootstrap and Bootstrap Material Design Styles -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.material-design/0.5.9/css/bootstrap-material-design.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.material-design/0.5.9/css/ripples.min.css" />
+
+    <style>
+        /**
+         * Just a simple background color,
+         * to make it look a bit more awesome.
+         */
+        body {
+            background-color: #eee;
+        }
+    </style>
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="//css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+
+    <script src="libs/jquery-2.2.3.min.js"></script>
+    <script src="libs/q.min.js"></script>
+    <script src="libs/mustache.js"></script>
+    <script src="libs/sammy-0.7.5.min.js"></script>
+    <script src="libs/Chart.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="page-header">
+            <h1>DevLabs Piknik Challenge</h1>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-3">
+
+                <div class="panel panel-info">
+                    <div id="left-side"></div>
+                </div>
+
+            </div>
+
+
+            <div class="col-sm-9">
+
+                <div class="panel panel-primary">
+                    <div id="right-side"></div>
+                </div>
+
+
+                <div class="panel panel-primary">
+                        <div class="panel-heading">Твоите предпочитания (в синьо), спрямо средно-статистическите на човек от екипа (в сиво)</div>
+                        <div class="panel-body">
+                            <canvas id="chart"></canvas>
+                        </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Супер!</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Предпочитанията ти са получени успешно. Може би.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Окей</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <!-- Bootstrap and Bootstrap Material Design Scripts -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="//cdn.jsdelivr.net/bootstrap.material-design/0.5.9/js/material.min.js"></script>
+    <script src="//cdn.jsdelivr.net/bootstrap.material-design/0.5.9/js/ripples.min.js"></script>
+
+    <script>
+        $(function(){
+            /**
+             * Init Bootstrap MaterialJS
+             * https://github.com/FezVrasta/bootstrap-material-design#functions
+             */
+            $.material.init();
+        });
+    </script>
+
+
+    <script src="js/helpers/requester.js"></script>
+
+    <script src="js/models/currentUserModel.js"></script>
+
+    <script src="js/views/currentUserViewBag.js"></script>
+
+    <script src="js/controllers/currentUserController.js"></script>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
