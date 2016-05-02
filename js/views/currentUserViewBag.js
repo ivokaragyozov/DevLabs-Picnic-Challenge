@@ -12,6 +12,16 @@ app.currentUserViewBag = (function () {
             $(selector).html(renderedHtml);
 
             $("[name='input']").on('input', function (event) {
+
+                //Check if the number you have entered in the input is correct
+                var value = $(this).val();
+                if (value.length > 1 || (!/^\d+$/.test(value) && value != "") || value.substring(0, 1) == "0") {
+                    alert("Можеш да въведеш само естествено число по-малко от 10!");
+                    if (value.length > 1) this.value = value.substring(0, 1);
+                    else this.value = "";
+                }
+
+                //Tell to the app to update the data
                 Sammy(function () {
                     this.trigger('updateData');
                 });

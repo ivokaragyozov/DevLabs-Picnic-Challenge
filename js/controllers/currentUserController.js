@@ -42,7 +42,9 @@ app.currentUserController = (function () {
                         name: product.name,
                         price: product.price,
                         totalCost: 0,
-                        count: 0
+                        count: 0,
+                        yourCount: 0,
+                        yourCost: 0
                     };
                 });
 
@@ -50,7 +52,8 @@ app.currentUserController = (function () {
                     .then(function (results) {
                         var data = {
                             products: productsById,
-                            totalCost: 0
+                            totalCost: 0,
+                            yourTotalCost: 0
                         };
 
                         results.data.forEach(function (order) {
@@ -108,17 +111,17 @@ app.currentUserController = (function () {
                             labels: [],
                             datasets: [
                                 {
-                                    label: "All users info",
+                                    label: "Информация за всички потребители",
                                     fill: true,
                                     lineTension: 0,
-                                    backgroundColor: "rgba(135,206,250,0.4)",
-                                    borderColor: "rgba(135,206,250,1)",
-                                    pointBorderColor: "rgba(135,206,250,1)",
+                                    backgroundColor: "rgba(128,128,128,0.4)",
+                                    borderColor: "rgba(128,128,128,1)",
+                                    pointBorderColor: "rgba(128,128,128,1)",
                                     pointBackgroundColor: "#fff",
                                     pointBorderWidth: 1,
                                     pointHoverRadius: 5,
-                                    pointHoverBackgroundColor: "rgba(135,206,250,1)",
-                                    pointHoverBorderColor: "rgba(135,206,250,1)",
+                                    pointHoverBackgroundColor: "rgba(128,128,128,1)",
+                                    pointHoverBorderColor: "rgba(128,128,128,1)",
                                     pointHoverBorderWidth: 2,
                                     data: []
                                 }
@@ -149,7 +152,9 @@ app.currentUserController = (function () {
                         name: product.name,
                         price: product.price,
                         totalCost: 0,
-                        count: 0
+                        count: 0,
+                        yourCount: 0,
+                        yourCost: 0
                     };
 
                 });
@@ -158,7 +163,8 @@ app.currentUserController = (function () {
                     .then(function (results) {
                         var data = {
                             products: productsById,
-                            totalCost: 0
+                            totalCost: 0,
+                            yourTotalCost: 0
                         };
 
                         results.data.forEach(function (order) {
@@ -175,7 +181,9 @@ app.currentUserController = (function () {
                         $("[name='input']").each(function (i, obj) {
                             if ($(this).val()) {
                                 productsById[$(this).parent().attr('product-id')].count = productsById[$(this).parent().attr('product-id')].count + parseInt($(this).val());
+                                productsById[$(this).parent().attr('product-id')].yourCount = parseInt($(this).val());
                                 productsById[$(this).parent().attr('product-id')].totalCost = productsById[$(this).parent().attr('product-id')].totalCost + $(this).val() * productsById[$(this).parent().attr('product-id')].price;
+                                productsById[$(this).parent().attr('product-id')].yourCost = productsById[$(this).parent().attr('product-id')].yourCost + $(this).val() * productsById[$(this).parent().attr('product-id')].price;
                                 currentUserProducts.push({ count: parseInt($(this).val()) });
                             }
                             else {
@@ -186,23 +194,9 @@ app.currentUserController = (function () {
                         var dataForChart = {
                             labels: [],
                             datasets: [
+                                
                                 {
-                                    label: "All users info",
-                                    fill: true,
-                                    lineTension: 0, 
-                                    backgroundColor: "rgba(135,206,250,0.4)",
-                                    borderColor: "rgba(135,206,250,1)",
-                                    pointBorderColor: "rgba(135,206,250,1)",
-                                    pointBackgroundColor: "#fff",
-                                    pointBorderWidth: 1,
-                                    pointHoverRadius: 5,
-                                    pointHoverBackgroundColor: "rgba(135,206,250,1)",
-                                    pointHoverBorderColor: "rgba(135,206,250,1)",
-                                    pointHoverBorderWidth: 2,
-                                    data: []
-                                },
-                                {
-                                    label: "Current user info",
+                                    label: "Информация за всички потребители",
                                     fill: true,
                                     lineTension: 0, 
                                     backgroundColor: "rgba(128,128,128,0.4)",
@@ -213,6 +207,21 @@ app.currentUserController = (function () {
                                     pointHoverRadius: 5,
                                     pointHoverBackgroundColor: "rgba(128,128,128,1)",
                                     pointHoverBorderColor: "rgba(128,128,128,1)",
+                                    pointHoverBorderWidth: 2,
+                                    data: []
+                                }, 
+                                {
+                                    label: "Информация за текущия потребител",
+                                    fill: true,
+                                    lineTension: 0, 
+                                    backgroundColor: "rgba(135,206,250,0.4)",
+                                    borderColor: "rgba(135,206,250,1)",
+                                    pointBorderColor: "rgba(135,206,250,1)",
+                                    pointBackgroundColor: "#fff",
+                                    pointBorderWidth: 1,
+                                    pointHoverRadius: 5,
+                                    pointHoverBackgroundColor: "rgba(135,206,250,1)",
+                                    pointHoverBorderColor: "rgba(135,206,250,1)",
                                     pointHoverBorderWidth: 2,
                                     data: []
                                 }
@@ -235,11 +244,14 @@ app.currentUserController = (function () {
 
                         data.products.forEach(function (product) {
                             data.totalCost = data.totalCost + product.totalCost;
+                            data.yourTotalCost = data.yourTotalCost + product.yourCost;
                             product.totalCost = product.totalCost.toFixed(2);
                             product.price = product.price.toFixed(2);
+                            product.yourCost = product.yourCost.toFixed(2);
                         });
 
                         data.totalCost = data.totalCost.toFixed(2);
+                        data.yourTotalCost = data.yourTotalCost.toFixed(2);
                         _this.viewBag.showRightSide(selectorRightSide, data);
                     });
             });

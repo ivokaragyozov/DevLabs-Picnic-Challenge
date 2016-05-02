@@ -13,9 +13,9 @@
             {{#products}}
             <tr>
                 <td>{{name}}</td>
-                <td>{{count}}</td>
+                <td>{{count}} (Ти искаш: {{yourCount}})</td>
                 <td>{{price}}лв</td>
-                <td>{{totalCost}}лв</td>
+                <td>{{totalCost}}лв (Ти трябва да платиш: {{yourCost}}лв)</td>
             </tr>
             {{/products}}
         </tbody>
@@ -23,6 +23,10 @@
             <tr>
                 <td colspan="3" class="text-right">Нужен бюджет:</td>
                 <td>{{totalCost}}лв</td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right">Ти трябва да платиш общо:</td>
+                <td>{{yourTotalCost}}лв</td>
             </tr>
         </tfoot>
     </table>
