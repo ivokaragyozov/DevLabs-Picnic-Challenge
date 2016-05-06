@@ -12,12 +12,14 @@ app.currentUserController = (function () {
     CurrentUserController.prototype.loadLeftSide = function (selector) {
         var _this = this;
 
+        //Get all information about all products from the database 
         this.model.getAllProducts()
             .then(function (results) {
                 var data = {
                     products: []
                 };
 
+                //Put the information in the data object
                 results.data.forEach(function (product) {
                     data.products.push({
                         name: product.name,
@@ -25,6 +27,7 @@ app.currentUserController = (function () {
                     });
                 });
 
+                //Visualizes the left side with the information taken from the database
                 _this.viewBag.showLeftSide(selector, data);
             });
     };
@@ -34,8 +37,11 @@ app.currentUserController = (function () {
         var _this = this,
             productsById = [];
 
+        //Get information about all products from the database
         this.model.getAllProducts()
             .then(function (results) {
+
+                //Put the information in the productsById object 
                 results.data.forEach(function (product) {
                     productsById[product.id] = {
                         _id: product.id, 
@@ -48,6 +54,8 @@ app.currentUserController = (function () {
                     };
                 });
 
+
+                //Get information about all orders from the database
                 _this.model.getAllOrders()
                     .then(function (results) {
                         var data = {
@@ -56,6 +64,7 @@ app.currentUserController = (function () {
                             yourTotalCost: 0
                         };
 
+                        //Put the information about the orders in the data object
                         results.data.forEach(function (order) {
                             order.items.forEach(function (item) {
                                 data.products[item.product_id].count = data.products[item.product_id].count + item.quantity;
@@ -63,15 +72,24 @@ app.currentUserController = (function () {
                             });
                         });
 
+                        //Remove the first element of the object, because it's empty
                         data.products.shift();
 
+                        //Make calculations about total cost per product and total cost at all
                         data.products.forEach(function (product) {
                             data.totalCost = data.totalCost + product.totalCost;
+
+                            //Fix the double values to 2 digits after the decimal point
                             product.totalCost = product.totalCost.toFixed(2);
+
+                            //Fix the double values to 2 digits after the decimal point
                             product.price = product.price.toFixed(2);
                         });
 
+                        //Fix the double values to 2 digits after the decimal point
                         data.totalCost = data.totalCost.toFixed(2);
+
+                        //Visualizes the right side
                         _this.viewBag.showRightSide(selector, data);
                     });
             });
@@ -83,8 +101,11 @@ app.currentUserController = (function () {
             productsById = [],
             users = new Object();
 
+        //Get information about all products from the database
         this.model.getAllProducts()
             .then(function (results) {
+
+                //Put the information in the productsById object
                 results.data.forEach(function (product) {
                     productsById[product.id] = {
                         _id: product.id,
@@ -96,8 +117,11 @@ app.currentUserController = (function () {
 
                 });
 
+                //Get information about all orders from the database
                 _this.model.getAllOrders()
                     .then(function (results) {
+
+                        //Put the information in the productsById and count the number of the users
                         results.data.forEach(function (order) {
                             users[order.user_id] = 1;
                             order.items.forEach(function (item) {
@@ -107,6 +131,7 @@ app.currentUserController = (function () {
 
                         var countOfUsers = Object.keys(users).length;
 
+                        //This is the date needed for the chart
                         var dataForChart = {
                             labels: [],
                             datasets: [
@@ -133,6 +158,8 @@ app.currentUserController = (function () {
                             dataForChart.datasets[0].data.push(product.count / countOfUsers);
                         });
 
+
+                        //Visualizes the chart
                         _this.viewBag.showChart(selector, dataForChart, { scaleStartValue: 0 });
                     });
             });
@@ -144,8 +171,11 @@ app.currentUserController = (function () {
             productsById = [], 
             users = new Object();
 
+        //Get information about all products from the database
         this.model.getAllProducts()
             .then(function (results) {
+
+                //Put the information in the productsById object
                 results.data.forEach(function (product) {
                     productsById[product.id] = {
                         _id: product.id,
@@ -159,6 +189,7 @@ app.currentUserController = (function () {
 
                 });
 
+                //Get information about all orders from the database
                 _this.model.getAllOrders()
                     .then(function (results) {
                         var data = {
@@ -167,6 +198,7 @@ app.currentUserController = (function () {
                             yourTotalCost: 0
                         };
 
+                        //Put the information in the data object and count the users
                         results.data.forEach(function (order) {
                             order.items.forEach(function (item) {
                                 data.products[item.product_id].count = data.products[item.product_id].count + item.quantity;
@@ -178,6 +210,7 @@ app.currentUserController = (function () {
                         var countOfUsers = Object.keys(users).length;
                         var currentUserProducts = [{}];
 
+                        //Get informations for the current user from the inputs in the left part
                         $("[name='input']").each(function (i, obj) {
                             if ($(this).val()) {
                                 productsById[$(this).parent().attr('product-id')].count = productsById[$(this).parent().attr('product-id')].count + parseInt($(this).val());
@@ -191,6 +224,7 @@ app.currentUserController = (function () {
                             }
                         });
 
+                        //This is the data needed for the chart
                         var dataForChart = {
                             labels: [],
                             datasets: [
@@ -228,30 +262,47 @@ app.currentUserController = (function () {
                             ]
                         };
 
+                        //Remove the first element of the object, because it's empty
                         currentUserProducts.shift();
-
+                        
+                        //Fill the dataForChart object with information about all other users
                         productsById.forEach(function (product) {
                             dataForChart.labels.push(product.name);
                             dataForChart.datasets[0].data.push(product.count / countOfUsers);
                         });
+                        //Fill the dataForChart object with information about the current user
                         currentUserProducts.forEach(function (product) {
                             dataForChart.datasets[1].data.push(product.count);
                         });
 
+                        //Visualizes the chart
                         _this.viewBag.showChart(selectorChart, dataForChart)
 
+                        //Remove the first element of the object, because it's empty
                         data.products.shift();
 
+                        //Calculates the totalCost and other calculations about the current user
                         data.products.forEach(function (product) {
                             data.totalCost = data.totalCost + product.totalCost;
                             data.yourTotalCost = data.yourTotalCost + product.yourCost;
+
+                            //Fix the double values to 2 digits after the decimal point
                             product.totalCost = product.totalCost.toFixed(2);
+
+                            //Fix the double values to 2 digits after the decimal point
                             product.price = product.price.toFixed(2);
+
+                            //Fix the double values to 2 digits after the decimal point
                             product.yourCost = product.yourCost.toFixed(2);
                         });
 
+                        //Fix the double values to 2 digits after the decimal point
                         data.totalCost = data.totalCost.toFixed(2);
+
+                        //Fix the double values to 2 digits after the decimal point
                         data.yourTotalCost = data.yourTotalCost.toFixed(2);
+
+                        //Vizualizes the right part
                         _this.viewBag.showRightSide(selectorRightSide, data);
                     });
             });

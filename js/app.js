@@ -3,6 +3,8 @@
 var app = app || {};
 
 (function () {
+
+    //Used to control the routes of the app
     var router = Sammy(function () {
         var requester = app.requester.load('http://picnic-challenge.herokuapp.com'),
             selectorLeftSide = '#left-side',
@@ -15,16 +17,19 @@ var app = app || {};
 
         var currentUserController = app.currentUserController.load(currentUserModel, currentUserViewBag);
 
+        //When the app is loaded for the first time
         this.get('#/', function () {
             currentUserController.loadLeftSide(selectorLeftSide);
             currentUserController.loadRightSide(selectorRightSide);
             currentUserController.loadChart(selectorChart);
         });
 
+        //When the app trigger "updateData" 
         this.bind('updateData', function (ev) {
             currentUserController.updateData(selectorRightSide, selectorChart);
         });
     });
 
+    //Run the app when it's loaded for the first time
     router.run('#/');
 }());

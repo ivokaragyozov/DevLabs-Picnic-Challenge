@@ -7,10 +7,13 @@ app.requester = (function () {
         this.baseUrl = baseUrl;
     }
 
+
+    //When get request is ordered to the database
     Requester.prototype.get = function (url) {
         return makeRequest("GET", url);
     }
 
+    //Used to make requests
     function makeRequest(method, url) {
         var defer = Q.defer();
 

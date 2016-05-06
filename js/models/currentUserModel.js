@@ -10,13 +10,17 @@ app.currentUserModel = (function () {
 
     //Used to get info about all products
     CurrentUserModel.prototype.getAllProducts = function () {
+        //Get the requester url -  http://picnic-challenge.herokuapp.com/products
         var requestUrl = this.requester.baseUrl + '/products';
+
         return this.requester.get(requestUrl);
     };
 
     //Used to get info about all the orders of the other users
     CurrentUserModel.prototype.getAllOrders = function () {
+        //Get the request url -  http://picnic-challenge.herokuapp.com/orders
         var requestUrl = this.requester.baseUrl + '/orders';
+
         return this.requester.get(requestUrl);
     };
 

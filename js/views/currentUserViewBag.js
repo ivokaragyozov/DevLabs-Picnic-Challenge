@@ -11,6 +11,7 @@ app.currentUserViewBag = (function () {
             var renderedHtml = Mustache.render(templ, data);
             $(selector).html(renderedHtml);
 
+            //When the user write something in any of the input in the left
             $("[name='input']").on('input', function (event) {
 
                 //Check if the number you have entered in the input is correct
@@ -21,7 +22,7 @@ app.currentUserViewBag = (function () {
                     else this.value = "";
                 }
 
-                //Tell to the app to update the data
+                //Tell to the app.js to update the data
                 Sammy(function () {
                     this.trigger('updateData');
                 });
@@ -31,6 +32,8 @@ app.currentUserViewBag = (function () {
 
     //Used to visualize the right part of the app
     function showRightSide(selector, data) {
+
+        //Get the template and render it with the information
         $.get('templates/right-side.html', function (templ) {
             var renderedHtml = Mustache.render(templ, data);
             $(selector).html(renderedHtml);
@@ -39,7 +42,11 @@ app.currentUserViewBag = (function () {
 
     //Used to visualize the chart
     function showChart(selector, data) {
-        if(chart) chart.destroy();
+
+        //Check if chart exists and if so clears it
+        if (chart) chart.destroy();
+
+        //Create the chart with the given information
         chart = new Chart($('#chart'), { type: 'line', data: data, options: { lineTension: 0 } });
     };
 
