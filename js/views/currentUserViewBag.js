@@ -6,8 +6,8 @@ app.currentUserViewBag = (function () {
     var chart;
 
     //Used to visualize the left part of the app
-    function showLeftSide(selector, data) {
-        $.get('templates/left-side.html', function(templ) {
+    function showPossibleChoices(selector, data) {
+        $.get('templates/possible-choices.html', function(templ) {
             var renderedHtml = Mustache.render(templ, data);
             $(selector).html(renderedHtml);
 
@@ -31,10 +31,10 @@ app.currentUserViewBag = (function () {
     };
 
     //Used to visualize the right part of the app
-    function showRightSide(selector, data) {
+    function showAllUsersInfo(selector, data) {
 
         //Get the template and render it with the information
-        $.get('templates/right-side.html', function (templ) {
+        $.get('templates/all-users-info.html', function (templ) {
             var renderedHtml = Mustache.render(templ, data);
             $(selector).html(renderedHtml);
         });
@@ -53,8 +53,8 @@ app.currentUserViewBag = (function () {
     return {
         load: function () {
             return {
-                showLeftSide: showLeftSide,
-                showRightSide: showRightSide,
+                showPossibleChoices: showPossibleChoices,
+                showAllUsersInfo: showAllUsersInfo,
                 showChart: showChart
             };
         }
